@@ -1,0 +1,5 @@
+###
+GET http://localhost:8080/test/test1
+
+###
+GET localhost:8080/test/resp
