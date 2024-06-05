@@ -5,10 +5,25 @@ GET http://localhost:8080/vehicle/count
 GET http://localhost:8080/vehicle/getAll
 
 ###
-GET localhost:8080/vehicle/get-vid/5
+GET http://localhost:8080/vehicle/get-vid/5
 
 ###
-DELETE localhost:8080/vehicle/delete/5
+DELETE http://localhost:8080/vehicle/delete/5
+
+###
+POST http://localhost:8080/vehicle/save
+Content-Type: application/json
+
+{
+  "vid": 6,
+  "battery": "三元电池",
+  "mileage": 50,
+  "batteryHealth": 100
+}
+
+###
+POST http://localhost:8080/vehicle/query
+
 
 
 

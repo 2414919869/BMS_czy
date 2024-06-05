@@ -1,10 +1,13 @@
 package com.czy.bms.controller;
 
+import com.czy.bms.request.VehicleQueryReq;
+import com.czy.bms.request.VehicleSaveReq;
 import com.czy.bms.response.CommonResp;
 import com.czy.bms.service.VehicleService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/vehicle")
@@ -34,6 +37,32 @@ public class VehicleController {
     public CommonResp deleteByVid(@PathVariable("vid") Short vid) {
         if (vehicleService.deleteByVid(vid)) {
             return new CommonResp().success();
+        } else {
+            return new CommonResp().error();
+        }
+    }
+
+    @PostMapping("/save")
+    public CommonResp saveVehicle(@Valid @RequestBody VehicleSaveReq vehicleSaveReq) {
+        return new CommonResp().success()
+                .data(vehicleService.saveVehicle(vehicleSaveReq));
+    }
+
+    @PostMapping("/query/one")
+    public CommonResp selectVehicle(@Valid @RequestBody VehicleQueryReq vehicleQueryReq) {
+        if (vehicleService.selectVehicle(vehicleQueryReq)!=null){
+            return new CommonResp().success()
+                    .data(vehicleService.selectVehicle(vehicleQueryReq));
+        } else {
+            return new CommonResp().error();
+        }
+    }
+
+    @PostMapping("/query/more")
+    public CommonResp selectVehicles(@Valid @RequestBody VehicleQueryReq vehicleQueryReq) {
+        if (vehicleService.selectVehicles(vehicleQueryReq)!=null){
+            return new CommonResp().success()
+                    .data(vehicleService.selectVehicles(vehicleQueryReq));
         } else {
             return new CommonResp().error();
         }
