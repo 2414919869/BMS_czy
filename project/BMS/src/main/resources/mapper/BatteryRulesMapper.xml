@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.czy.bms.mapper.BatteryRulesMapper">
+  <resultMap id="BaseResultMap" type="com.czy.bms.entity.BatteryRules">
+    <id column="rid" jdbcType="INTEGER" property="rid" />
+    <result column="vid" jdbcType="SMALLINT" property="vid" />
+    <result column="rule_id" jdbcType="CHAR" property="ruleId" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="battery" jdbcType="CHAR" property="battery" />
+    <result column="Mx" jdbcType="DECIMAL" property="mx" />
+    <result column="Mi" jdbcType="DECIMAL" property="mi" />
+    <result column="Ix" jdbcType="DECIMAL" property="ix" />
+    <result column="Ii" jdbcType="DECIMAL" property="ii" />
+    <result column="level" jdbcType="CHAR" property="level" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    rid, vid, rule_id, `name`, battery, Mx, Mi, Ix, Ii, `level`, created_time, updated_time, 
+    is_deleted
+  </sql>
+  <select id="selectByExample" parameterType="com.czy.bms.entity.BatteryRulesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from battery_rules
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from battery_rules
+    where rid = #{rid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from battery_rules
+    where rid = #{rid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.czy.bms.entity.BatteryRulesExample">
+    delete from battery_rules
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.czy.bms.entity.BatteryRules">
+    insert into battery_rules (rid, vid, rule_id, 
+      `name`, battery, Mx, Mi, 
+      Ix, Ii, `level`, created_time, 
+      updated_time, is_deleted)
+    values (#{rid,jdbcType=INTEGER}, #{vid,jdbcType=SMALLINT}, #{ruleId,jdbcType=CHAR}, 
+      #{name,jdbcType=CHAR}, #{battery,jdbcType=CHAR}, #{mx,jdbcType=DECIMAL}, #{mi,jdbcType=DECIMAL}, 
+      #{ix,jdbcType=DECIMAL}, #{ii,jdbcType=DECIMAL}, #{level,jdbcType=CHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.czy.bms.entity.BatteryRules">
+    insert into battery_rules
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        rid,
+      </if>
+      <if test="vid != null">
+        vid,
+      </if>
+      <if test="ruleId != null">
+        rule_id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="battery != null">
+        battery,
+      </if>
+      <if test="mx != null">
+        Mx,
+      </if>
+      <if test="mi != null">
+        Mi,
+      </if>
+      <if test="ix != null">
+        Ix,
+      </if>
+      <if test="ii != null">
+        Ii,
+      </if>
+      <if test="level != null">
+        `level`,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="vid != null">
+        #{vid,jdbcType=SMALLINT},
+      </if>
+      <if test="ruleId != null">
+        #{ruleId,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="battery != null">
+        #{battery,jdbcType=CHAR},
+      </if>
+      <if test="mx != null">
+        #{mx,jdbcType=DECIMAL},
+      </if>
+      <if test="mi != null">
+        #{mi,jdbcType=DECIMAL},
+      </if>
+      <if test="ix != null">
+        #{ix,jdbcType=DECIMAL},
+      </if>
+      <if test="ii != null">
+        #{ii,jdbcType=DECIMAL},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=CHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.czy.bms.entity.BatteryRulesExample" resultType="java.lang.Long">
+    select count(*) from battery_rules
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update battery_rules
+    <set>
+      <if test="record.rid != null">
+        rid = #{record.rid,jdbcType=INTEGER},
+      </if>
+      <if test="record.vid != null">
+        vid = #{record.vid,jdbcType=SMALLINT},
+      </if>
+      <if test="record.ruleId != null">
+        rule_id = #{record.ruleId,jdbcType=CHAR},
+      </if>
+      <if test="record.name != null">
+        `name` = #{record.name,jdbcType=CHAR},
+      </if>
+      <if test="record.battery != null">
+        battery = #{record.battery,jdbcType=CHAR},
+      </if>
+      <if test="record.mx != null">
+        Mx = #{record.mx,jdbcType=DECIMAL},
+      </if>
+      <if test="record.mi != null">
+        Mi = #{record.mi,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ix != null">
+        Ix = #{record.ix,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ii != null">
+        Ii = #{record.ii,jdbcType=DECIMAL},
+      </if>
+      <if test="record.level != null">
+        `level` = #{record.level,jdbcType=CHAR},
+      </if>
+      <if test="record.createdTime != null">
+        created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedTime != null">
+        updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isDeleted != null">
+        is_deleted = #{record.isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update battery_rules
+    set rid = #{record.rid,jdbcType=INTEGER},
+      vid = #{record.vid,jdbcType=SMALLINT},
+      rule_id = #{record.ruleId,jdbcType=CHAR},
+      `name` = #{record.name,jdbcType=CHAR},
+      battery = #{record.battery,jdbcType=CHAR},
+      Mx = #{record.mx,jdbcType=DECIMAL},
+      Mi = #{record.mi,jdbcType=DECIMAL},
+      Ix = #{record.ix,jdbcType=DECIMAL},
+      Ii = #{record.ii,jdbcType=DECIMAL},
+      `level` = #{record.level,jdbcType=CHAR},
+      created_time = #{record.createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
+      is_deleted = #{record.isDeleted,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.czy.bms.entity.BatteryRules">
+    update battery_rules
+    <set>
+      <if test="vid != null">
+        vid = #{vid,jdbcType=SMALLINT},
+      </if>
+      <if test="ruleId != null">
+        rule_id = #{ruleId,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=CHAR},
+      </if>
+      <if test="battery != null">
+        battery = #{battery,jdbcType=CHAR},
+      </if>
+      <if test="mx != null">
+        Mx = #{mx,jdbcType=DECIMAL},
+      </if>
+      <if test="mi != null">
+        Mi = #{mi,jdbcType=DECIMAL},
+      </if>
+      <if test="ix != null">
+        Ix = #{ix,jdbcType=DECIMAL},
+      </if>
+      <if test="ii != null">
+        Ii = #{ii,jdbcType=DECIMAL},
+      </if>
+      <if test="level != null">
+        `level` = #{level,jdbcType=CHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.czy.bms.entity.BatteryRules">
+    update battery_rules
+    set vid = #{vid,jdbcType=SMALLINT},
+      rule_id = #{ruleId,jdbcType=CHAR},
+      `name` = #{name,jdbcType=CHAR},
+      battery = #{battery,jdbcType=CHAR},
+      Mx = #{mx,jdbcType=DECIMAL},
+      Mi = #{mi,jdbcType=DECIMAL},
+      Ix = #{ix,jdbcType=DECIMAL},
+      Ii = #{ii,jdbcType=DECIMAL},
+      `level` = #{level,jdbcType=CHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+</mapper>
