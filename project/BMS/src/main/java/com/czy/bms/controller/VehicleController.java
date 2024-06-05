@@ -48,11 +48,11 @@ public class VehicleController {
                 .data(vehicleService.saveVehicle(vehicleSaveReq));
     }
 
-    @PostMapping("/query/one")
-    public CommonResp selectVehicle(@Valid @RequestBody VehicleQueryReq vehicleQueryReq) {
-        if (vehicleService.selectVehicle(vehicleQueryReq)!=null){
+    @GetMapping("/query/{vid}")
+    public CommonResp selectByVid(@PathVariable("vid") Short vid) {
+        if (vehicleService.selectByVid(vid)!=null){
             return new CommonResp().success()
-                    .data(vehicleService.selectVehicle(vehicleQueryReq));
+                    .data(vehicleService.selectByVid(vid));
         } else {
             return new CommonResp().error();
         }

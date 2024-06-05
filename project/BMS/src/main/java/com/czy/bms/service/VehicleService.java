@@ -12,6 +12,6 @@ public interface VehicleService {
     Vehicle getVehiclesByVid(Short vid);
     Boolean deleteByVid(Short vid);
     Vehicle saveVehicle(VehicleSaveReq vehicleSaveReq);
-    Vehicle selectVehicle(VehicleQueryReq vehicleQueryReq);
+    Vehicle selectByVid(Short vid);
     List<Vehicle> selectVehicles(VehicleQueryReq vehicleQueryReq);
 }

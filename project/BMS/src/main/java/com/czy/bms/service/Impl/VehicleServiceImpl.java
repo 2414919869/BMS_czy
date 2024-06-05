@@ -73,20 +73,10 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Vehicle selectVehicle(VehicleQueryReq vehicleQueryReq) {
+    public Vehicle selectByVid(Short vid) {
         VehicleExample vehicleExample = new VehicleExample();
-        if (vehicleQueryReq.getVid() != null) {
-            vehicleExample.createCriteria().andVidEqualTo(vehicleQueryReq.getVid());
-        }
-        if (vehicleQueryReq.getBattery() != null) {
-            vehicleExample.createCriteria().andBatteryEqualTo(vehicleQueryReq.getBattery());
-        }
-        if (vehicleQueryReq.getMileage() != null) {
-            vehicleExample.createCriteria().andMileageEqualTo(vehicleQueryReq.getMileage());
-        }
-        if (vehicleQueryReq.getBatteryHealth() != null) {
-            vehicleExample.createCriteria().andBatteryHealthEqualTo(vehicleQueryReq.getBatteryHealth());
-        }
+        VehicleExample.Criteria criteria = vehicleExample.createCriteria();
+        criteria.andVidEqualTo(vid);
         if (!vehicleMapper.selectByExample(vehicleExample).get(0).getIsDeleted()) {
             return vehicleMapper.selectByExample(vehicleExample).get(0);
         } else {
