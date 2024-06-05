@@ -48,7 +48,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Boolean deleteByVid(Short vid) {
+    public boolean deleteByVid(Short vid) {
         Vehicle vehicle = getVehiclesByVid(vid);
         if (vehicle != null && vehicle.getIsDeleted() == false) {
             vehicle.setIsDeleted(true);
@@ -61,7 +61,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Vehicle saveVehicle(VehicleSaveReq vehicleSaveReq) {
+    public void insertVehicle(VehicleSaveReq vehicleSaveReq) {
         Vehicle vehicle = new Vehicle();
         BeanUtils.copyProperties(vehicleSaveReq, vehicle);
         vehicle.setId(new RandomIdUtil().getRandomId());
@@ -69,7 +69,6 @@ public class VehicleServiceImpl implements VehicleService {
         vehicle.setUpdatedTime(new Date());
         vehicle.setIsDeleted(false);
         vehicleMapper.insert(vehicle);
-        return vehicle;
     }
 
     @Override
@@ -105,6 +104,29 @@ public class VehicleServiceImpl implements VehicleService {
             return vehicleMapper.selectByExample(vehicleExample);
         } else {
             return null;
+        }
+    }
+
+    @Override
+    public boolean updateByVid(VehicleQueryReq vehicleQueryReq) {
+        VehicleExample vehicleExample = new VehicleExample();
+        vehicleExample.createCriteria().andVidEqualTo(vehicleQueryReq.getVid());
+        Vehicle vehicle = vehicleMapper.selectByExample(vehicleExample).get(0);
+        if (vehicle.getIsDeleted() == false) {
+            if (vehicleQueryReq.getMileage() != null) {
+                vehicle.setMileage(vehicleQueryReq.getMileage());
+            }
+            if (vehicleQueryReq.getBatteryHealth() != null) {
+                vehicle.setBatteryHealth(vehicleQueryReq.getBatteryHealth());
+            }
+            if (vehicleQueryReq.getBattery() != null) {
+                vehicle.setBattery(vehicleQueryReq.getBattery());
+            }
+            vehicle.setUpdatedTime(new Date());
+            vehicleMapper.updateByPrimaryKeySelective(vehicle);
+            return true;
+        } else {
+            return false;
         }
     }
 }

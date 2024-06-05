@@ -15,10 +15,10 @@ POST http://localhost:8080/vehicle/save
 Content-Type: application/json
 
 {
-  "vid": 6,
-  "battery": "三元电池",
-  "mileage": 50,
-  "batteryHealth": 100
+  "vid": 8,
+  "battery": "铁锂电池",
+  "mileage": 600,
+  "batteryHealth": 78
 }
 
 ###

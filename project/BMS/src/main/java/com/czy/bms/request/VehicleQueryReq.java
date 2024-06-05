@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class VehicleQueryReq {
+    private int vehicleId;
     private Short vid;
     private String battery;
     private Integer mileage;

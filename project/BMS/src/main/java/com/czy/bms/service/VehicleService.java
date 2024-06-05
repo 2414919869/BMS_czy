@@ -10,8 +10,9 @@ public interface VehicleService {
     long countVehicle();
     List<Vehicle> getAllVehicles();
     Vehicle getVehiclesByVid(Short vid);
-    Boolean deleteByVid(Short vid);
-    Vehicle saveVehicle(VehicleSaveReq vehicleSaveReq);
+    boolean deleteByVid(Short vid);
+    void insertVehicle(VehicleSaveReq vehicleSaveReq);
     Vehicle selectByVid(Short vid);
     List<Vehicle> selectVehicles(VehicleQueryReq vehicleQueryReq);
+    boolean updateByVid(VehicleQueryReq vehicleQueryReq);
 }

@@ -43,9 +43,9 @@ public class VehicleController {
     }
 
     @PostMapping("/save")
-    public CommonResp saveVehicle(@Valid @RequestBody VehicleSaveReq vehicleSaveReq) {
-        return new CommonResp().success()
-                .data(vehicleService.saveVehicle(vehicleSaveReq));
+    public CommonResp insertVehicle(@Valid @RequestBody VehicleSaveReq vehicleSaveReq) {
+        vehicleService.insertVehicle(vehicleSaveReq);
+        return new CommonResp().success();
     }
 
     @GetMapping("/query/{vid}")
@@ -63,6 +63,15 @@ public class VehicleController {
         if (vehicleService.selectVehicles(vehicleQueryReq)!=null){
             return new CommonResp().success()
                     .data(vehicleService.selectVehicles(vehicleQueryReq));
+        } else {
+            return new CommonResp().error();
+        }
+    }
+
+    @PostMapping("/update")
+    public CommonResp updateByVid(@Valid @RequestBody VehicleQueryReq vehicleQueryReq) {
+        if (vehicleService.updateByVid(vehicleQueryReq)){
+            return new CommonResp().success();
         } else {
             return new CommonResp().error();
         }
