@@ -2,3 +2,14 @@
 GET http://localhost:8080/vehicle/count
 
 ###
+GET http://localhost:8080/vehicle/getAll
+
+###
+GET localhost:8080/vehicle/get-vid/5
+
+###
+DELETE localhost:8080/vehicle/delete/5
+
+
+
+
