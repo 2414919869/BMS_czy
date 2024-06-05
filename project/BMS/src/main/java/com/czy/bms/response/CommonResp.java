@@ -11,7 +11,7 @@ public class CommonResp {
     public static CommonResp success(){
         CommonResp commonResp = new CommonResp();
         commonResp.setCode(200);
-        commonResp.setMessage("ok");
+        commonResp.setMessage("success");
         return commonResp;
     }
 
