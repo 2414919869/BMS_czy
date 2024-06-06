@@ -44,7 +44,6 @@ public class VehicleServiceImpl implements VehicleService {
         } else {
             return null;
         }
-
     }
 
     @Override
@@ -76,8 +75,7 @@ public class VehicleServiceImpl implements VehicleService {
         VehicleExample vehicleExample = new VehicleExample();
         VehicleExample.Criteria criteria = vehicleExample.createCriteria();
         criteria.andVidEqualTo(vid);
-        if (vehicleMapper.selectByExample(vehicleExample)==null||vehicleMapper.selectByExample(vehicleExample).size()==0)
-        {
+        if (vehicleMapper.selectByExample(vehicleExample) == null || vehicleMapper.selectByExample(vehicleExample).size() == 0) {
             return null;
         } else {
             if (!vehicleMapper.selectByExample(vehicleExample).get(0).getIsDeleted()) {
@@ -105,7 +103,7 @@ public class VehicleServiceImpl implements VehicleService {
             criteria.andBatteryHealthEqualTo(vehicleQueryReq.getBatteryHealth());
         }
         criteria.andIsDeletedEqualTo(false);
-        if (vehicleMapper.selectByExample(vehicleExample)!=null) {
+        if (vehicleMapper.selectByExample(vehicleExample) != null) {
             return vehicleMapper.selectByExample(vehicleExample);
         } else {
             return null;
@@ -117,10 +115,9 @@ public class VehicleServiceImpl implements VehicleService {
         VehicleExample vehicleExample = new VehicleExample();
         vehicleExample.createCriteria().andVidEqualTo(vehicleQueryReq.getVid());
         List<Vehicle> vehicles = vehicleMapper.selectByExample(vehicleExample);
-        if (vehicles==null||vehicles.size()==0){
+        if (vehicles == null || vehicles.size() == 0) {
             Vehicle vehicle_insert = new Vehicle();
             BeanUtils.copyProperties(vehicleQueryReq, vehicle_insert);
-            vehicle_insert.setVid(vehicleQueryReq.getVid());
             vehicle_insert.setId(new RandomIdUtil().getRandomId());
             vehicle_insert.setCreatedTime(new Date());
             vehicle_insert.setUpdatedTime(new Date());
