@@ -76,10 +76,15 @@ public class VehicleServiceImpl implements VehicleService {
         VehicleExample vehicleExample = new VehicleExample();
         VehicleExample.Criteria criteria = vehicleExample.createCriteria();
         criteria.andVidEqualTo(vid);
-        if (!vehicleMapper.selectByExample(vehicleExample).get(0).getIsDeleted()) {
-            return vehicleMapper.selectByExample(vehicleExample).get(0);
-        } else {
+        if (vehicleMapper.selectByExample(vehicleExample)==null||vehicleMapper.selectByExample(vehicleExample).size()==0)
+        {
             return null;
+        } else {
+            if (!vehicleMapper.selectByExample(vehicleExample).get(0).getIsDeleted()) {
+                return vehicleMapper.selectByExample(vehicleExample).get(0);
+            } else {
+                return null;
+            }
         }
     }
 
@@ -108,11 +113,22 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public boolean updateByVid(VehicleQueryReq vehicleQueryReq) {
+    public void updateByVid(VehicleQueryReq vehicleQueryReq) {
         VehicleExample vehicleExample = new VehicleExample();
         vehicleExample.createCriteria().andVidEqualTo(vehicleQueryReq.getVid());
-        Vehicle vehicle = vehicleMapper.selectByExample(vehicleExample).get(0);
-        if (vehicle.getIsDeleted() == false) {
+        List<Vehicle> vehicles = vehicleMapper.selectByExample(vehicleExample);
+        if (vehicles==null||vehicles.size()==0){
+            Vehicle vehicle_insert = new Vehicle();
+            BeanUtils.copyProperties(vehicleQueryReq, vehicle_insert);
+            vehicle_insert.setVid(vehicleQueryReq.getVid());
+            vehicle_insert.setId(new RandomIdUtil().getRandomId());
+            vehicle_insert.setCreatedTime(new Date());
+            vehicle_insert.setUpdatedTime(new Date());
+            vehicle_insert.setIsDeleted(false);
+            vehicleMapper.insert(vehicle_insert);
+        } else {
+            Vehicle vehicle = vehicleMapper.selectByExample(vehicleExample).get(0);
+            vehicle.setIsDeleted(false);
             if (vehicleQueryReq.getMileage() != null) {
                 vehicle.setMileage(vehicleQueryReq.getMileage());
             }
@@ -124,9 +140,6 @@ public class VehicleServiceImpl implements VehicleService {
             }
             vehicle.setUpdatedTime(new Date());
             vehicleMapper.updateByPrimaryKeySelective(vehicle);
-            return true;
-        } else {
-            return false;
         }
     }
 }

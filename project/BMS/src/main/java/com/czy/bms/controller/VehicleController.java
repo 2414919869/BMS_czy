@@ -50,7 +50,7 @@ public class VehicleController {
 
     @GetMapping("/query/{vid}")
     public CommonResp selectByVid(@PathVariable("vid") Short vid) {
-        if (vehicleService.selectByVid(vid)!=null){
+        if (vehicleService.selectByVid(vid) != null) {
             return new CommonResp().success()
                     .data(vehicleService.selectByVid(vid));
         } else {
@@ -60,7 +60,7 @@ public class VehicleController {
 
     @PostMapping("/query/more")
     public CommonResp selectVehicles(@Valid @RequestBody VehicleQueryReq vehicleQueryReq) {
-        if (vehicleService.selectVehicles(vehicleQueryReq)!=null){
+        if (vehicleService.selectVehicles(vehicleQueryReq) != null) {
             return new CommonResp().success()
                     .data(vehicleService.selectVehicles(vehicleQueryReq));
         } else {
@@ -70,10 +70,8 @@ public class VehicleController {
 
     @PostMapping("/update")
     public CommonResp updateByVid(@Valid @RequestBody VehicleQueryReq vehicleQueryReq) {
-        if (vehicleService.updateByVid(vehicleQueryReq)){
-            return new CommonResp().success();
-        } else {
-            return new CommonResp().error();
-        }
+        vehicleService.updateByVid(vehicleQueryReq);
+        return new CommonResp().success();
+
     }
 }
