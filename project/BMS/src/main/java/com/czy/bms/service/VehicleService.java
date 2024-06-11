@@ -15,4 +15,5 @@ public interface VehicleService {
     Vehicle selectByVid(Short vid);
     List<Vehicle> selectVehicles(VehicleQueryReq vehicleQueryReq);
     void updateByVid(VehicleQueryReq vehicleQueryReq);
+    boolean delete(Short vid);
 }

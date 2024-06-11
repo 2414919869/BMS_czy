@@ -139,4 +139,18 @@ public class VehicleServiceImpl implements VehicleService {
             vehicleMapper.updateByPrimaryKeySelective(vehicle);
         }
     }
+
+    @Override
+    public boolean delete(Short vid) {
+        VehicleExample vehicleExample = new VehicleExample();
+        VehicleExample.Criteria criteria = vehicleExample.createCriteria();
+        criteria.andVidEqualTo(vid);
+        List<Vehicle> vehicles = vehicleMapper.selectByExample(vehicleExample);
+        if (vehicles == null || vehicles.size() == 0) {
+            return false;
+        } else {
+            vehicleMapper.deleteByExample(vehicleExample);
+            return true;
+        }
+    }
 }
