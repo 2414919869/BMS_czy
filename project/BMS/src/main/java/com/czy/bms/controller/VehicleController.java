@@ -72,6 +72,5 @@ public class VehicleController {
     public CommonResp updateByVid(@Valid @RequestBody VehicleQueryReq vehicleQueryReq) {
         vehicleService.updateByVid(vehicleQueryReq);
         return new CommonResp().success();
-
     }
 }

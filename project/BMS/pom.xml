@@ -85,7 +85,7 @@
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
                 <version>1.4.0</version>
                 <configuration>
-                    <configurationFile>src/main/resources/generator-battery-rules.xml</configurationFile>
+                    <configurationFile>src/main/resources/generator-vehicle.xml</configurationFile>
                     <overwrite>true</overwrite>
                     <verbose>true</verbose>
                 </configuration>

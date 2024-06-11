@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.czy.bms.mapper.VehicleMapper">
-  <resultMap id="BaseResultMap" type="com.czy.bms.entity.Vehicle">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="vid" jdbcType="SMALLINT" property="vid" />
+<mapper namespace="com.czy.bms.mapper.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.czy.bms.entity.UserInfo">
     <result column="uid" jdbcType="BIGINT" property="uid" />
-    <result column="battery" jdbcType="CHAR" property="battery" />
-    <result column="mileage" jdbcType="INTEGER" property="mileage" />
-    <result column="battery_health" jdbcType="TINYINT" property="batteryHealth" />
+    <result column="user_name" jdbcType="INTEGER" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="status" jdbcType="CHAR" property="status" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
     <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
@@ -71,15 +69,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, vid, `uid`, battery, mileage, battery_health, created_time, updated_time, is_deleted
+    `uid`, user_name, `password`, `status`, created_time, updated_time, is_deleted
   </sql>
-  <select id="selectByExample" parameterType="com.czy.bms.entity.VehicleExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.czy.bms.entity.UserInfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from vehicle
+    from user_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,52 +85,34 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from vehicle
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from vehicle
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.czy.bms.entity.VehicleExample">
-    delete from vehicle
+  <delete id="deleteByExample" parameterType="com.czy.bms.entity.UserInfoExample">
+    delete from user_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.czy.bms.entity.Vehicle">
-    insert into vehicle (id, vid, `uid`, 
-      battery, mileage, battery_health, 
-      created_time, updated_time, is_deleted
-      )
-    values (#{id,jdbcType=BIGINT}, #{vid,jdbcType=SMALLINT}, #{uid,jdbcType=BIGINT}, 
-      #{battery,jdbcType=CHAR}, #{mileage,jdbcType=INTEGER}, #{batteryHealth,jdbcType=TINYINT}, 
-      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT}
-      )
+  <insert id="insert" parameterType="com.czy.bms.entity.UserInfo">
+    insert into user_info (`uid`, user_name, `password`, 
+      `status`, created_time, updated_time, 
+      is_deleted)
+    values (#{uid,jdbcType=BIGINT}, #{userName,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, 
+      #{isDeleted,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.czy.bms.entity.Vehicle">
-    insert into vehicle
+  <insert id="insertSelective" parameterType="com.czy.bms.entity.UserInfo">
+    insert into user_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="vid != null">
-        vid,
-      </if>
       <if test="uid != null">
         `uid`,
       </if>
-      <if test="battery != null">
-        battery,
+      <if test="userName != null">
+        user_name,
       </if>
-      <if test="mileage != null">
-        mileage,
+      <if test="password != null">
+        `password`,
       </if>
-      <if test="batteryHealth != null">
-        battery_health,
+      <if test="status != null">
+        `status`,
       </if>
       <if test="createdTime != null">
         created_time,
@@ -145,23 +125,17 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="vid != null">
-        #{vid,jdbcType=SMALLINT},
-      </if>
       <if test="uid != null">
         #{uid,jdbcType=BIGINT},
       </if>
-      <if test="battery != null">
-        #{battery,jdbcType=CHAR},
+      <if test="userName != null">
+        #{userName,jdbcType=INTEGER},
       </if>
-      <if test="mileage != null">
-        #{mileage,jdbcType=INTEGER},
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
       </if>
-      <if test="batteryHealth != null">
-        #{batteryHealth,jdbcType=TINYINT},
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
       </if>
       <if test="createdTime != null">
         #{createdTime,jdbcType=TIMESTAMP},
@@ -174,32 +148,26 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.czy.bms.entity.VehicleExample" resultType="java.lang.Long">
-    select count(*) from vehicle
+  <select id="countByExample" parameterType="com.czy.bms.entity.UserInfoExample" resultType="java.lang.Long">
+    select count(*) from user_info
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update vehicle
+    update user_info
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
-      </if>
-      <if test="record.vid != null">
-        vid = #{record.vid,jdbcType=SMALLINT},
-      </if>
       <if test="record.uid != null">
         `uid` = #{record.uid,jdbcType=BIGINT},
       </if>
-      <if test="record.battery != null">
-        battery = #{record.battery,jdbcType=CHAR},
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=INTEGER},
       </if>
-      <if test="record.mileage != null">
-        mileage = #{record.mileage,jdbcType=INTEGER},
+      <if test="record.password != null">
+        `password` = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="record.batteryHealth != null">
-        battery_health = #{record.batteryHealth,jdbcType=TINYINT},
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=CHAR},
       </if>
       <if test="record.createdTime != null">
         created_time = #{record.createdTime,jdbcType=TIMESTAMP},
@@ -216,60 +184,16 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update vehicle
-    set id = #{record.id,jdbcType=BIGINT},
-      vid = #{record.vid,jdbcType=SMALLINT},
-      `uid` = #{record.uid,jdbcType=BIGINT},
-      battery = #{record.battery,jdbcType=CHAR},
-      mileage = #{record.mileage,jdbcType=INTEGER},
-      battery_health = #{record.batteryHealth,jdbcType=TINYINT},
+    update user_info
+    set `uid` = #{record.uid,jdbcType=BIGINT},
+      user_name = #{record.userName,jdbcType=INTEGER},
+      `password` = #{record.password,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=CHAR},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
       is_deleted = #{record.isDeleted,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.czy.bms.entity.Vehicle">
-    update vehicle
-    <set>
-      <if test="vid != null">
-        vid = #{vid,jdbcType=SMALLINT},
-      </if>
-      <if test="uid != null">
-        `uid` = #{uid,jdbcType=BIGINT},
-      </if>
-      <if test="battery != null">
-        battery = #{battery,jdbcType=CHAR},
-      </if>
-      <if test="mileage != null">
-        mileage = #{mileage,jdbcType=INTEGER},
-      </if>
-      <if test="batteryHealth != null">
-        battery_health = #{batteryHealth,jdbcType=TINYINT},
-      </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatedTime != null">
-        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isDeleted != null">
-        is_deleted = #{isDeleted,jdbcType=BIT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.czy.bms.entity.Vehicle">
-    update vehicle
-    set vid = #{vid,jdbcType=SMALLINT},
-      `uid` = #{uid,jdbcType=BIGINT},
-      battery = #{battery,jdbcType=CHAR},
-      mileage = #{mileage,jdbcType=INTEGER},
-      battery_health = #{batteryHealth,jdbcType=TINYINT},
-      created_time = #{createdTime,jdbcType=TIMESTAMP},
-      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      is_deleted = #{isDeleted,jdbcType=BIT}
-    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

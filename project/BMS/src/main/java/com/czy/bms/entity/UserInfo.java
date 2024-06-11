@@ -2,40 +2,20 @@ package com.czy.bms.entity;
 
 import java.util.Date;
 
-public class Vehicle {
-    private Long id;
-
-    private Short vid;
-
+public class UserInfo {
     private Long uid;
 
-    private String battery;
+    private Integer userName;
 
-    private Integer mileage;
+    private String password;
 
-    private Byte batteryHealth;
+    private String status;
 
     private Date createdTime;
 
     private Date updatedTime;
 
     private Boolean isDeleted;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Short getVid() {
-        return vid;
-    }
-
-    public void setVid(Short vid) {
-        this.vid = vid;
-    }
 
     public Long getUid() {
         return uid;
@@ -45,28 +25,28 @@ public class Vehicle {
         this.uid = uid;
     }
 
-    public String getBattery() {
-        return battery;
+    public Integer getUserName() {
+        return userName;
     }
 
-    public void setBattery(String battery) {
-        this.battery = battery;
+    public void setUserName(Integer userName) {
+        this.userName = userName;
     }
 
-    public Integer getMileage() {
-        return mileage;
+    public String getPassword() {
+        return password;
     }
 
-    public void setMileage(Integer mileage) {
-        this.mileage = mileage;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public Byte getBatteryHealth() {
-        return batteryHealth;
+    public String getStatus() {
+        return status;
     }
 
-    public void setBatteryHealth(Byte batteryHealth) {
-        this.batteryHealth = batteryHealth;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getCreatedTime() {
@@ -99,12 +79,10 @@ public class Vehicle {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", vid=").append(vid);
         sb.append(", uid=").append(uid);
-        sb.append(", battery=").append(battery);
-        sb.append(", mileage=").append(mileage);
-        sb.append(", batteryHealth=").append(batteryHealth);
+        sb.append(", userName=").append(userName);
+        sb.append(", password=").append(password);
+        sb.append(", status=").append(status);
         sb.append(", createdTime=").append(createdTime);
         sb.append(", updatedTime=").append(updatedTime);
         sb.append(", isDeleted=").append(isDeleted);
