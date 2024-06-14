@@ -14,11 +14,6 @@ public class BatteryRulesQueryReq {
 
     private String battery;
 
-    private Long mx;
+    private String level;
 
-    private Long mi;
-
-    private Long ix;
-
-    private Long ii;
 }

@@ -102,18 +102,6 @@ public class BatteryRulesServiceImpl implements BatteryRulesService {
             if (batteryRulesQueryReq.getBattery()!=null){
                 criteria.andBatteryEqualTo(batteryRulesQueryReq.getBattery());
             }
-            if(batteryRulesQueryReq.getMx()!=null){
-                criteria.andMxEqualTo(batteryRulesQueryReq.getMx());
-            }
-            if(batteryRulesQueryReq.getMi()!=null){
-                criteria.andMxEqualTo(batteryRulesQueryReq.getMi());
-            }
-            if(batteryRulesQueryReq.getIx()!=null){
-                criteria.andMxEqualTo(batteryRulesQueryReq.getIx());
-            }
-            if(batteryRulesQueryReq.getIi()!=null){
-                criteria.andMxEqualTo(batteryRulesQueryReq.getIi());
-            }
             criteria.andIsDeletedEqualTo(false);
             List<BatteryRules> rules = batteryRulesMapper.selectByExample(batteryRulesExample);
             if (rules.size() > 0) {
@@ -157,17 +145,8 @@ public class BatteryRulesServiceImpl implements BatteryRulesService {
             if (batteryRulesQueryReq.getBattery()!=null){
                 batteryRules.setBattery(batteryRulesQueryReq.getBattery());
             }
-            if(batteryRulesQueryReq.getMx()!=null){
-                batteryRules.setMx(batteryRulesQueryReq.getMx());
-            }
-            if(batteryRulesQueryReq.getMi()!=null){
-                batteryRules.setMi(batteryRulesQueryReq.getMi());
-            }
-            if(batteryRulesQueryReq.getIx()!=null){
-                batteryRules.setIx(batteryRulesQueryReq.getIx());
-            }
-            if(batteryRulesQueryReq.getIi()!=null){
-                batteryRules.setIi(batteryRulesQueryReq.getIi());
+            if (batteryRulesQueryReq.getLevel()!=null){
+                batteryRules.setLevel(batteryRulesQueryReq.getLevel());
             }
             batteryRules.setUpdatedTime(new Date());
             batteryRulesMapper.updateByPrimaryKey(batteryRules);

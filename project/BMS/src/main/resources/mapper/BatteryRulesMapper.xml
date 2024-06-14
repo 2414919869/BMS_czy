@@ -7,10 +7,6 @@
     <result column="rule_id" jdbcType="CHAR" property="ruleId" />
     <result column="name" jdbcType="CHAR" property="name" />
     <result column="battery" jdbcType="CHAR" property="battery" />
-    <result column="Mx" jdbcType="DECIMAL" property="mx" />
-    <result column="Mi" jdbcType="DECIMAL" property="mi" />
-    <result column="Ix" jdbcType="DECIMAL" property="ix" />
-    <result column="Ii" jdbcType="DECIMAL" property="ii" />
     <result column="level" jdbcType="CHAR" property="level" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
@@ -75,8 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    rid, vid, rule_id, `name`, battery, Mx, Mi, Ix, Ii, `level`, created_time, updated_time, 
-    is_deleted
+    rid, vid, rule_id, `name`, battery, `level`, created_time, updated_time, is_deleted
   </sql>
   <select id="selectByExample" parameterType="com.czy.bms.entity.BatteryRulesExample" resultMap="BaseResultMap">
     select
@@ -110,12 +105,10 @@
   </delete>
   <insert id="insert" parameterType="com.czy.bms.entity.BatteryRules">
     insert into battery_rules (rid, vid, rule_id, 
-      `name`, battery, Mx, Mi, 
-      Ix, Ii, `level`, created_time, 
+      `name`, battery, `level`, created_time, 
       updated_time, is_deleted)
     values (#{rid,jdbcType=INTEGER}, #{vid,jdbcType=SMALLINT}, #{ruleId,jdbcType=CHAR}, 
-      #{name,jdbcType=CHAR}, #{battery,jdbcType=CHAR}, #{mx,jdbcType=DECIMAL}, #{mi,jdbcType=DECIMAL}, 
-      #{ix,jdbcType=DECIMAL}, #{ii,jdbcType=DECIMAL}, #{level,jdbcType=CHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=CHAR}, #{battery,jdbcType=CHAR}, #{level,jdbcType=CHAR}, #{createdTime,jdbcType=TIMESTAMP}, 
       #{updatedTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.czy.bms.entity.BatteryRules">
@@ -135,18 +128,6 @@
       </if>
       <if test="battery != null">
         battery,
-      </if>
-      <if test="mx != null">
-        Mx,
-      </if>
-      <if test="mi != null">
-        Mi,
-      </if>
-      <if test="ix != null">
-        Ix,
-      </if>
-      <if test="ii != null">
-        Ii,
       </if>
       <if test="level != null">
         `level`,
@@ -176,18 +157,6 @@
       </if>
       <if test="battery != null">
         #{battery,jdbcType=CHAR},
-      </if>
-      <if test="mx != null">
-        #{mx,jdbcType=DECIMAL},
-      </if>
-      <if test="mi != null">
-        #{mi,jdbcType=DECIMAL},
-      </if>
-      <if test="ix != null">
-        #{ix,jdbcType=DECIMAL},
-      </if>
-      <if test="ii != null">
-        #{ii,jdbcType=DECIMAL},
       </if>
       <if test="level != null">
         #{level,jdbcType=CHAR},
@@ -227,18 +196,6 @@
       <if test="record.battery != null">
         battery = #{record.battery,jdbcType=CHAR},
       </if>
-      <if test="record.mx != null">
-        Mx = #{record.mx,jdbcType=DECIMAL},
-      </if>
-      <if test="record.mi != null">
-        Mi = #{record.mi,jdbcType=DECIMAL},
-      </if>
-      <if test="record.ix != null">
-        Ix = #{record.ix,jdbcType=DECIMAL},
-      </if>
-      <if test="record.ii != null">
-        Ii = #{record.ii,jdbcType=DECIMAL},
-      </if>
       <if test="record.level != null">
         `level` = #{record.level,jdbcType=CHAR},
       </if>
@@ -263,10 +220,6 @@
       rule_id = #{record.ruleId,jdbcType=CHAR},
       `name` = #{record.name,jdbcType=CHAR},
       battery = #{record.battery,jdbcType=CHAR},
-      Mx = #{record.mx,jdbcType=DECIMAL},
-      Mi = #{record.mi,jdbcType=DECIMAL},
-      Ix = #{record.ix,jdbcType=DECIMAL},
-      Ii = #{record.ii,jdbcType=DECIMAL},
       `level` = #{record.level,jdbcType=CHAR},
       created_time = #{record.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{record.updatedTime,jdbcType=TIMESTAMP},
@@ -290,18 +243,6 @@
       <if test="battery != null">
         battery = #{battery,jdbcType=CHAR},
       </if>
-      <if test="mx != null">
-        Mx = #{mx,jdbcType=DECIMAL},
-      </if>
-      <if test="mi != null">
-        Mi = #{mi,jdbcType=DECIMAL},
-      </if>
-      <if test="ix != null">
-        Ix = #{ix,jdbcType=DECIMAL},
-      </if>
-      <if test="ii != null">
-        Ii = #{ii,jdbcType=DECIMAL},
-      </if>
       <if test="level != null">
         `level` = #{level,jdbcType=CHAR},
       </if>
@@ -323,10 +264,6 @@
       rule_id = #{ruleId,jdbcType=CHAR},
       `name` = #{name,jdbcType=CHAR},
       battery = #{battery,jdbcType=CHAR},
-      Mx = #{mx,jdbcType=DECIMAL},
-      Mi = #{mi,jdbcType=DECIMAL},
-      Ix = #{ix,jdbcType=DECIMAL},
-      Ii = #{ii,jdbcType=DECIMAL},
       `level` = #{level,jdbcType=CHAR},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},

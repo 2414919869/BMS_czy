@@ -15,11 +15,4 @@ public class BatteryRulesSaveReq {
     @NotNull(message = "【电池类型】不能为空！")
     private String battery;
 
-    private Long mx;
-
-    private Long mi;
-
-    private Long ix;
-
-    private Long ii;
 }
