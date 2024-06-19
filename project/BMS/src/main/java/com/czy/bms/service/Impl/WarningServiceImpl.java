@@ -148,7 +148,6 @@ public class WarningServiceImpl implements WarningService {
                     else levelM = "-1";
                 }
 
-
                 batteryRule.setLevel(levelM);
                 BatteryRulesQueryReq req = new BatteryRulesQueryReq();
                 BeanUtils.copyProperties(batteryRule, req);
@@ -162,7 +161,6 @@ public class WarningServiceImpl implements WarningService {
                     warningResp.setWarningLevel(levelM);
                     warningResps.add(warningResp);
                 }
-
 
                 float Ix = getValue(wariningReq.getSignal(), "Ix");
                 float Ii = getValue(wariningReq.getSignal(), "Ii");
