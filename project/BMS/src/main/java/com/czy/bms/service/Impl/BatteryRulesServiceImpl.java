@@ -6,6 +6,7 @@ import com.czy.bms.mapper.BatteryRulesMapper;
 import com.czy.bms.request.BatteryRulesQueryReq;
 import com.czy.bms.request.BatteryRulesSaveReq;
 import com.czy.bms.service.BatteryRulesService;
+import com.czy.bms.util.RedisUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class BatteryRulesServiceImpl implements BatteryRulesService {
     @Resource
     private BatteryRulesMapper batteryRulesMapper;
 
+    @Resource
+    private RedisUtil redisUtil;
+
     @Override
     public long countRules() {
         return batteryRulesMapper.countByExample(null);
@@ -25,10 +29,20 @@ public class BatteryRulesServiceImpl implements BatteryRulesService {
 
     @Override
     public List<BatteryRules> getAllRules() {
-        BatteryRulesExample example = new BatteryRulesExample();
-        example.setOrderByClause("rid desc");
-        return batteryRulesMapper.selectByExample(example);
+//        BatteryRulesExample example = new BatteryRulesExample();
+//        example.setOrderByClause("rid desc");
+//        return batteryRulesMapper.selectByExample(example);
+
+        String allRules=redisUtil.get("allRules");
+        if(allRules==null){
+            BatteryRulesExample example=new BatteryRulesExample();
+            example.createCriteria().andIsDeletedEqualTo(false);
+            example.setOrderByClause("id desc");
+            redisUtil.set("allRules",String.valueOf(batteryRulesMapper.selectByExample(example)));
+        }
+        return batteryRulesMapper.selectByExample(null);
     }
+
 
     @Override
     public BatteryRules getRuleByRid(int rid) {
@@ -84,34 +98,35 @@ public class BatteryRulesServiceImpl implements BatteryRulesService {
 
     @Override
     public List<BatteryRules> selectRules(BatteryRulesQueryReq batteryRulesQueryReq) {
-        BatteryRulesExample batteryRulesExample=new BatteryRulesExample();
-        BatteryRulesExample.Criteria criteria = batteryRulesExample.createCriteria();
-        if (batteryRulesQueryReq != null) {
-            if (batteryRulesQueryReq.getRid()!=null){
-                criteria.andRidEqualTo(batteryRulesQueryReq.getRid());
-            }
-            if (batteryRulesQueryReq.getVid()!=null){
-                criteria.andVidEqualTo(batteryRulesQueryReq.getVid());
-            }
-            if (batteryRulesQueryReq.getRuleId()!=null){
-                criteria.andRuleIdEqualTo(batteryRulesQueryReq.getRuleId());
-            }
-            if (batteryRulesQueryReq.getName()!=null){
-                criteria.andNameEqualTo(batteryRulesQueryReq.getName());
-            }
-            if (batteryRulesQueryReq.getBattery()!=null){
-                criteria.andBatteryEqualTo(batteryRulesQueryReq.getBattery());
-            }
-            criteria.andIsDeletedEqualTo(false);
-            List<BatteryRules> rules = batteryRulesMapper.selectByExample(batteryRulesExample);
-            if (rules.size() > 0) {
-                return rules;
-            } else {
-                return null;
-            }
-        } else {
-            return getAllRules();
-        }
+//        BatteryRulesExample batteryRulesExample=new BatteryRulesExample();
+//        BatteryRulesExample.Criteria criteria = batteryRulesExample.createCriteria();
+//        if (batteryRulesQueryReq != null) {
+//            if (batteryRulesQueryReq.getRid()!=null){
+//                criteria.andRidEqualTo(batteryRulesQueryReq.getRid());
+//            }
+//            if (batteryRulesQueryReq.getVid()!=null){
+//                criteria.andVidEqualTo(batteryRulesQueryReq.getVid());
+//            }
+//            if (batteryRulesQueryReq.getRuleId()!=null){
+//                criteria.andRuleIdEqualTo(batteryRulesQueryReq.getRuleId());
+//            }
+//            if (batteryRulesQueryReq.getName()!=null){
+//                criteria.andNameEqualTo(batteryRulesQueryReq.getName());
+//            }
+//            if (batteryRulesQueryReq.getBattery()!=null){
+//                criteria.andBatteryEqualTo(batteryRulesQueryReq.getBattery());
+//            }
+//            criteria.andIsDeletedEqualTo(false);
+//            List<BatteryRules> rules = batteryRulesMapper.selectByExample(batteryRulesExample);
+//            if (rules.size() > 0) {
+//                return rules;
+//            } else {
+//                return null;
+//            }
+//        } else {
+//            return getAllRules();
+//        }
+        return null;
     }
 
     @Override

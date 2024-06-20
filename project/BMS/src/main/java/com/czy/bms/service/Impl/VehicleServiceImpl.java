@@ -7,6 +7,7 @@ import com.czy.bms.request.VehicleQueryReq;
 import com.czy.bms.request.VehicleSaveReq;
 import com.czy.bms.service.VehicleService;
 import com.czy.bms.util.RandomIdUtil;
+import com.czy.bms.util.RedisUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class VehicleServiceImpl implements VehicleService {
     @Resource
     private VehicleMapper vehicleMapper;
 
+    @Resource
+    private RedisUtil redisUtil;
+
     @Override
     public long countVehicle() {
         VehicleExample vehicleExample = new VehicleExample();
@@ -28,10 +32,19 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public List<Vehicle> getAllVehicles() {
-        VehicleExample vehicleExample = new VehicleExample();
-        vehicleExample.createCriteria().andIsDeletedEqualTo(false);
-        vehicleExample.setOrderByClause("id desc");
-        return vehicleMapper.selectByExample(vehicleExample);
+//        VehicleExample vehicleExample = new VehicleExample();
+//        vehicleExample.createCriteria().andIsDeletedEqualTo(false);
+//        vehicleExample.setOrderByClause("id desc");
+//        return vehicleMapper.selectByExample(vehicleExample);
+
+        String allVehicles=redisUtil.get("allVehicles");
+        if(allVehicles==null){
+            VehicleExample vehicleExample = new VehicleExample();
+            vehicleExample.createCriteria().andIsDeletedEqualTo(false);
+            vehicleExample.setOrderByClause("id desc");
+            redisUtil.set("allVehicles",String.valueOf(vehicleMapper.selectByExample(vehicleExample)));
+        }
+        return vehicleMapper.selectByExample(null);
     }
 
     @Override
